@@ -1,3 +1,5 @@
+####This party planner project is designed to allow users to be able to plan out their events, rsvp and create an easy experience for partying.
+#Project done with Laravel
 ## Laravel PHP Framework
 
 [![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)

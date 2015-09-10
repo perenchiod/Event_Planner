@@ -15,9 +15,8 @@ class User extends SoftModel implements UserInterface, RemindableInterface {
 	 *
 	 * @var string
 	 */
-	protected $table = 'users_table';
-	protected $hashable = [ 'password' ];
-
+	protected $table = 'users';
+	
 	/**
 	 * The attributes excluded from the model's JSON form.
 	 *
@@ -25,11 +24,21 @@ class User extends SoftModel implements UserInterface, RemindableInterface {
 	 */
 	protected $hidden = array('password', 'remember_token');
 
+	public function setPasswordAttribute($value)
+	{
+	    $this->attributes['password'] = Hash::make($value);
+	}
+	
 	protected $rules = array (
-		'email' => 'required|email|max:255|unique:users_table',
+		'email' => 'required|email|max:255|unique:users',
 		'first_name' => 'required|max:255',
 		'last_name' => 'required|max:255',
 		'password' => 'required|confirmed',
 	);
+
+	public function user()
+	{
+	    return $this->hasMany('CalendarEvent');
+	}
 
 }
