@@ -20,8 +20,17 @@ class CreateCalendarEventsTable extends Migration {
 			$table->string('title');
 			$table->string('description');
 			$table->decimal('price',30,2)->nullable();
-			$table->integer('user_id');
-			$table->integer('loction_id');
+			
+			$table->integer('user_id')->unsigned();
+			$table->foreign('user_id')
+      		->references('id')->on('users')
+      		->onDelete('cascade');
+			
+			$table->integer('location_id')->unsigned();
+			$table->foreign('location_id')
+      		->references('id')->on('location')
+      		->onDelete('cascade');
+			
 			$table->timestamps();
 			$table->softDeletes();
 		});

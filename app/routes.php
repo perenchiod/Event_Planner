@@ -10,9 +10,10 @@
 | and give it the Closure to execute when that URI is requested.
 |
 */
-Route::resource('posts', 'PostsController');
+Route::get('/home', 'LocationController@index');
+Route::get('/location', 'LocationController@getLocation');
 
-Route::get('/', function()
-{
-	return View::make('hello');
-});
+Route::resource('/', 'CalendarEventsController');
+Route::resource('/', 'LocationController');
+
+

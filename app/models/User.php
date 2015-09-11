@@ -1,6 +1,7 @@
 <?php
 
 use \Esensi\Model\SoftModel;
+use \Esensi\Model\Traits\HashingModelTrait;
 use Illuminate\Auth\UserTrait;
 use Illuminate\Auth\UserInterface;
 use Illuminate\Auth\Reminders\RemindableTrait;
@@ -16,7 +17,8 @@ class User extends SoftModel implements UserInterface, RemindableInterface {
 	 * @var string
 	 */
 	protected $table = 'users';
-	
+	protected $hashable = [ 'password' ];
+
 	/**
 	 * The attributes excluded from the model's JSON form.
 	 *
@@ -24,11 +26,6 @@ class User extends SoftModel implements UserInterface, RemindableInterface {
 	 */
 	protected $hidden = array('password', 'remember_token');
 
-	public function setPasswordAttribute($value)
-	{
-	    $this->attributes['password'] = Hash::make($value);
-	}
-	
 	protected $rules = array (
 		'email' => 'required|email|max:255|unique:users',
 		'first_name' => 'required|max:255',

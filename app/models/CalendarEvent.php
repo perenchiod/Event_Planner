@@ -10,8 +10,7 @@ class CalendarEvent extends SoftModel
 	protected $rules = array (
 		'start' => 'required|max:255',
 		'end' => 'required|max:255',
-		'title' => 'required|max:255',
-		'location_id' => 'required|confirmed|unique:calendar_events'
+		'title' => 'required|max:255'
 	);
 
 	public function getDate() 
