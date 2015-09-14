@@ -9,6 +9,13 @@
 	<!-- Latest compiled and minified JavaScript -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 	<script src="/bower_components/angular/angular.min.js"></script>
+  	<script type="text/javascript" src="/bower_components/moment/min/moment.min.js"></script>
+  	<script type="text/javascript" src="/bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+  	<link rel="stylesheet" href="/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css"/>
+  	<link rel="stylesheet" type="text/css" href="/css/CalendarEvent.css">
+
+  	<!-- Google fonts -->
+  	<link href='https://fonts.googleapis.com/css?family=Josefin+Sans' rel='stylesheet' type='text/css'>
 	<body>
 		@yield('header')
 		@yield('content')

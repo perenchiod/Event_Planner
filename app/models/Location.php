@@ -6,7 +6,7 @@ class Location extends SoftModel {
 
 	protected $table = 'location';
 
-	protected $rules = array (
+	public $rules = array (
 		'city' => 'required|max:255',
 		'state' => 'required|max:255',
 		'zip' => 'required|max:255',
@@ -15,7 +15,9 @@ class Location extends SoftModel {
 
 	public function location() 
 	{
-		return $this->belongsTo('CalendarEvent');
+		$this->belongsTo('CalendarEvent');
+		return $this->belongsTo('User');
+	
 	}
 	
 }

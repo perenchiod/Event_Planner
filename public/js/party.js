@@ -17,17 +17,16 @@
 
 
     app.controller("PartyController", ["$log", "$http", "$scope", function($log, $http, $scope) {
-        // An Ajax get request to load some data from the server
-        // $scope.events = [];
-        // $scope.locations = [];
-        // $http.get("/home").then(function(data) {
-        //     $scope.events = response.data;
-        //     $log.info("Ajax request completed successfully!");
-        //     $log.debug(data);
-        // }, function(response) {
-        //     $log.error("Ajax request failed for some reason!");
-        //     $log.debug(response);
-        // });
+        //An Ajax get request to load some data from the server
+        $scope.events = [];
+        $scope.locations = [];
+        $http.get("/home").then(function(data) {
+            // $scope.events = response.data;
+            $log.info("Ajax request completed successfully!");
+        }, function(response) {
+            $log.error("Ajax request failed for some reason!");
+            $log.debug(response);
+        });
 
         $scope.editModal = function() {
             $('#editModal').modal();
@@ -39,11 +38,25 @@
         }
 
         $scope.submitEvent = function() {
-
+             $http.put('/store').then(function (response) {
+                 $log.info("Edit has gone through");
+            }, function (response) {
+                $log.error("Creation Failed");
+                $log.debug(response);   
+            });
         }
 
-        $scope.submitLocation = function() {
-            $http.put('/submit/location' + $scope.post.id).then(function (response) {
+         $scope.submitLocation = function() {
+             $http.put('/store').then(function (response) {
+                 $log.info("Edit has gone through");
+            }, function (response) {
+                $log.error("Creation Failed");
+                $log.debug(response);   
+            });
+        }
+
+        $scope.editLocation = function() {
+            $http.put('/submit' + $scope.users.id).then(function (response) {
                  $log.info("Edit has gone through");
             }, function (response) {
                 $log.error("Edit failed");

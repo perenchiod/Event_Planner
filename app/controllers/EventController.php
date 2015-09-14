@@ -1,6 +1,6 @@
 <?php
 
-class LocationController extends \BaseController {
+class EventController extends \BaseController {
 
 	/**
 	 * Display a listing of the resource.
@@ -10,8 +10,9 @@ class LocationController extends \BaseController {
 	 */
 	public function index()
 	{
-		$locations = Input::get('location');
-		return View::make('/home')->with('locations', $locations);	
+		$locations = Location::paginate(4);
+		$events = CalendarEvent::paginate(4);
+		return View::make('/home')->with(array('locations' => $locations, 'events' => $events));	
 	}
 
 	/**
@@ -33,23 +34,29 @@ class LocationController extends \BaseController {
 	 */
 	public function store()
 	{
-		$validator = Validator::make(Input::all(), Location::$rules);
-		if($validator->fails()) {
-			Session::flash('errorMessage', 'Something went wrong!');
-			return Redirect::back()->withErrors($validator)->withInput();
-		} else {
-			$location = new Location();
-			$location->address = Input::get('address');
-			$location->city = Input::get('city');
-			$location->state = Input::get('state');
-			$location->zip = Input::get('zip');
-			$location->save();
+		
+		$location = new Location();
+		$location->address = Input::get('address');
+		$location->city = Input::get('city');
+		$location->state = Input::get('state');
+		$location->zip = Input::get('zip');
+		$location->save();
 
-			$locations = Location::paginate(7);
-			Session::flash('goodMessage' , 'All went right here!');
-			return View::make('/home')->with('locations' , $locations);
+		$event = new CalendarEvent();
+		$event->start = Input::get('start');
+		$event->end = Input::get('end');
+		$event->title = Input::get('title');
+		$event->description = Input::get('description');
+		if(Input::has('price')) {
+			$event->price = Input::get('price');
 		}
-	}
+		$event->save();
+
+		$locations = Location::paginate(7);
+		Session::flash('goodMessage' , 'All went right here!');
+		return View::make('/store')->with('locations' , $locations);
+		}
+	
 
 	/**
 	 * Display the specified resource.
@@ -60,12 +67,12 @@ class LocationController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		$location = Location::with('user')->find($id);
+		$location = Location::with('calendar_events')->find('user_id');
 		if(!$location) {
 			Session::flash('errorMessage' , "Blog post was not found");
 			App::abort(404);
 		} 
-		return View::make('/')->with(array('location' => $location));
+		return View::make('event/')->with('location' , $location);
 	}
 
 	/**
@@ -101,7 +108,7 @@ class LocationController extends \BaseController {
 			$location->zip = Input::get('zip');
 			$location->save();
 
-			return View::make('/')->with('location' , $location);
+			return View::make('/submit')->with('location' , $location);
 		}
 	}
 
