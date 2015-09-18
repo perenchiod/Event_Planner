@@ -20,6 +20,7 @@ class CreateLocationTable extends Migration {
 			$table->string('state');
 			$table->integer('zip');
 			$table->timestamps();
+			$table->softDeletes();
 		});
 	}
 

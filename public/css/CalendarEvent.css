@@ -3,10 +3,14 @@
 }
 
 .event{
-	height: 150px;
-	background-color: rgba(128,128,128,.5);
+	height: 190px;
+	background-color: rgba(221,255,27,.15);
 	text-align: center;
 	margin-bottom: 30px;
+}
+
+body {
+	background-image: url("/images/skulls.png");
 }
 
 #description {
@@ -23,5 +27,53 @@
 	font-family: 'Josefin Sans', sans-serif;
 	font-size: 28px;
   	text-shadow: 4px 4px 4px #aaa;
+}
+
+input.ng-touched.ng-invalid {
+	border: 2px dotted red;
+}
+
+.row {
+	margin-bottom: 20px;
+	margin-left: 70px;
+}
+
+#homeH1 {
+	font-family: 'Kaushan Script', cursive;
+	margin-left: 240px;
+}
+
+.showDescription {
+	font-size: 24px;
+	text-align: left;
+	background-color: rgba(50,205,255,.3);
+}
+
+.showH1 {
+	margin-bottom: 40px;
+}
+
+.RSVP {
+	left: 50px;
+	height: 30px;
+	width: 90px;
+	position: absolute;
+	background-color: rgba(50,206,255,.3);
+}
+
+.locationInfo {
+	position: absolute;
+	top: 500px;
+	right: 75px;
+	background-color: rgba(221,255,27,.15);
+}
+
+.locationDeets {
+	font-size: 25px;
+	border: 3px inset rgba(50,206,255,.3);
+}
+
+#styleH2 {
+	font-size: 30px;
 }
 

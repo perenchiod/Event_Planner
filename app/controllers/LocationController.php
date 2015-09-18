@@ -1,6 +1,6 @@
 <?php
 
-class EventController extends \BaseController {
+class LocationController extends \BaseController {
 
 	/**
 	 * Display a listing of the resource.
@@ -10,9 +10,9 @@ class EventController extends \BaseController {
 	 */
 	public function index()
 	{
-		$locations = Location::paginate(4);
-		$events = CalendarEvent::paginate(4);
-		return View::make('/home')->with(array('locations' => $locations, 'events' => $events));	
+		$locations = Location::get();
+		$CalendarEvent = CalendarEvent::paginate(6);
+		return View::make('/home')->with(array('locations' => $locations, 'events' => $CalendarEvent));	
 	}
 
 	/**
@@ -21,10 +21,10 @@ class EventController extends \BaseController {
 	 *
 	 * @return Response
 	 */
-	// public function create()
-	// {
-	// 	return View::make('/create');
-	// }
+	public function create()
+	{
+		return View::make('/location/create');
+	}
 
 	/**
 	 * Store a newly created resource in storage.
@@ -42,20 +42,10 @@ class EventController extends \BaseController {
 		$location->zip = Input::get('zip');
 		$location->save();
 
-		$event = new CalendarEvent();
-		$event->start = Input::get('start');
-		$event->end = Input::get('end');
-		$event->title = Input::get('title');
-		$event->description = Input::get('description');
-		if(Input::has('price')) {
-			$event->price = Input::get('price');
-		}
-		$event->save();
-
-		$locations = Location::paginate(7);
-		Session::flash('goodMessage' , 'All went right here!');
-		return View::make('/store')->with('locations' , $locations);
-		}
+		$locations = Location::orderBy('created_at', 'desc')->paginate(6);
+		return Redirect::action('LocationController@index');
+		
+	}
 	
 
 	/**
@@ -67,12 +57,13 @@ class EventController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		$location = Location::with('calendar_events')->find('user_id');
+		$location = Location::find($id);
 		if(!$location) {
 			Session::flash('errorMessage' , "Blog post was not found");
 			App::abort(404);
 		} 
-		return View::make('event/')->with('location' , $location);
+		Log::info(Input::all());
+		return View::make('/event')->with('location' , $location);
 	}
 
 	/**

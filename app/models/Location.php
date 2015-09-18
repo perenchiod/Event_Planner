@@ -13,11 +13,9 @@ class Location extends SoftModel {
 		'address' => 'required|max:300'
 	);
 
-	public function location() 
+	public function calendarEvents()
 	{
-		$this->belongsTo('CalendarEvent');
-		return $this->belongsTo('User');
-	
+		return $this->hasMany('CalendarEvent');
 	}
 	
 }

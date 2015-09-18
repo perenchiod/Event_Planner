@@ -18,10 +18,9 @@
 
     app.controller("PartyController", ["$log", "$http", "$scope", function($log, $http, $scope) {
         //An Ajax get request to load some data from the server
-        $scope.events = [];
-        $scope.locations = [];
-        $http.get("/home").then(function(data) {
-            // $scope.events = response.data;
+        $scope.inputData = [];
+        $http.get("/event/list").then(function(response) {
+            $scope.inputData = response.data;
             $log.info("Ajax request completed successfully!");
         }, function(response) {
             $log.error("Ajax request failed for some reason!");
@@ -32,13 +31,18 @@
             $('#editModal').modal();
         }
 
+         $scope.loginModal = function() {
+            $('#loginModal').modal();
+        }
+
         $scope.houdiniModal = function() {
             $("#calendarModal").modal('hide');
             $("#locationModal").modal();
         }
 
         $scope.submitEvent = function() {
-             $http.put('/store').then(function (response) {
+            $log.info($scope.inputData);
+            $http.put('/event/store').then(function (response) {
                  $log.info("Edit has gone through");
             }, function (response) {
                 $log.error("Creation Failed");
@@ -47,7 +51,7 @@
         }
 
          $scope.submitLocation = function() {
-             $http.put('/store').then(function (response) {
+             $http.put('/location/store').then(function (response) {
                  $log.info("Edit has gone through");
             }, function (response) {
                 $log.error("Creation Failed");
@@ -64,16 +68,22 @@
             });
         }
 
-        // Post some data to the server
-        // $http.post("/different/url.php", {
-        //     key1: "value a",
-        //     key2: "value b"
-        // }).then(function() {
-        //     $log.info("Info was sent to the server successfully!")
-        // }, function(response) {
-        //     $log.error("Ajax request failed for some reason!");
+        $scope.comparePasswords = function(password1, password2) {
+            if (password1 =! password2) {
+                $log.info("Passwords not equal!");
+            }
+        }   
 
-        //     $log.debug(response);
-        // });
+        $scope.deleteEvent = function (index) {
+            var id = $scope.inputData[index].id;
+            $http.delete('/event/' + id).then(function (response) {
+                $log.info("Post successfully deleted");
+                $scope.event.splice(index, 1);
+            }, function (response) {
+                $log.error("Post failed to delete");
+                $log.debug(response);
+            });
+        }
+
     }]);
 })();

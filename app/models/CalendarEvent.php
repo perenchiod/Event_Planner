@@ -7,7 +7,7 @@ class CalendarEvent extends SoftModel
 
 	protected $table = 'calendar_events';
 
-	protected $rules = array (
+	public $rules = array (
 		'start' => 'required|max:255',
 		'end' => 'required|max:255',
 		'title' => 'required|max:255'
@@ -18,9 +18,13 @@ class CalendarEvent extends SoftModel
 		return array_merge(parent::getDate(), 'start_time', 'end_time');
 	}
 
-	public function event()
+	public function location()
 	{
-		return $this->belongsTo('User' , 'user_id');
+		return $this->belongsTo('Location');
+	}
+	public function user()
+	{
+	    return $this->belongsToMany('User', 'calendar_event_user')->withTimestamps();
 	}
 
 }
